@@ -16,7 +16,7 @@ def run_app():
 @pytest.fixture
 async def client():
     nats_port = panini_config.nats_servers[0].split(':')[-1]
-    nats_host = panini_config.nats_servers[0].replace(':'+nats_port, '')
+    nats_host = panini_config.nats_servers[0].replace(':' + nats_port, '')
     client = AsyncTestClient(
         run_app,
         nats_host=nats_host,

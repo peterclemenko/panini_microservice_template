@@ -11,6 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 PANINI_CONFIG = None
 
+
 @dataclass
 class PaniniConfig:
     service_name: str
@@ -31,7 +32,8 @@ class PaniniConfig:
     def validate_nats_server(nats_server):
         port = nats_server.split(':')[-1]
         if re.match(r"[a-zA-Z0-9]+", port) is None:
-            raise Exception(f'Wrong port {port}, expected nats broker format: nats://<host>:<port>')
+            raise Exception(
+                f'Wrong port {port}, expected nats broker format: nats://<host>:<port>')
 
 
 class Environment:
@@ -87,6 +89,7 @@ def _get_config(config_path, config_file, default=None):
         return default
     return config
 
+
 def get_panini_config(env: str = None) -> PaniniConfig:
     Environment.load(env)
     panini_config = {}
@@ -98,15 +101,18 @@ def get_panini_config(env: str = None) -> PaniniConfig:
     if "internal_configs" in main_config and main_config["internal_configs"]:
         for internal_config_name, internal_config_path in main_config["internal_configs"].items():
             internal_config_path = internal_config_path.replace('./', '')
-            panini_config["internal_configs"][internal_config_name] = _get_config(config_path, internal_config_path)
+            panini_config["internal_configs"][internal_config_name] = _get_config(
+                config_path, internal_config_path)
 
     nats_config = _get_config(config_path, Environment.get_nats_config())
     panini_config.update(nats_config)
 
-    infrastructure_config = _get_config(config_path, Environment.get_infrastructure_config(), default={})
+    infrastructure_config = _get_config(
+        config_path, Environment.get_infrastructure_config(), default={})
     panini_config["infrastructure"] = infrastructure_config
 
-    logging_config = _get_config(config_path, Environment.get_logging_config(), default={})
+    logging_config = _get_config(
+        config_path, Environment.get_logging_config(), default={})
     panini_config['logging'] = logging_config
 
     custom_config = _get_config(config_path, Environment.get_custom_config(), default={})

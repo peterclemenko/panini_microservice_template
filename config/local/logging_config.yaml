@@ -2,10 +2,10 @@ disable_existing_loggers: false
 formatters:
   detailed:
     class: app.utils.logging.formatter.CustomJsonFormatter
-    format: '%(created)f %(name)s %(levelname)s %(processName)s %(threadName)s %(message)s'
+    format: "%(created)f %(name)s %(levelname)s %(processName)s %(threadName)s %(message)s"
   simple:
     class: logging.Formatter
-    format: '%(asctime)s %(name)-15s %(levelname)-8s %(message)s'
+    format: "%(asctime)s %(name)-15s %(levelname)-8s %(message)s"
 handlers:
   app:
     backupCount: 10
@@ -35,9 +35,9 @@ handlers:
 loggers: {}
 root:
   handlers:
-  - console
-  - errors
-  - app
-#  - loki
+    - console
+    - errors
+    - app
+  #  - loki
   level: DEBUG
 version: 1

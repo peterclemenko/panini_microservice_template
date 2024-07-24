@@ -28,6 +28,7 @@ async def request_periodically():
         response = await app.request(subject="some.request.subject", message=message)
         log.info(f"get response from periodic request {response}")
 
+
 @app.listen("some.request.subject")
 async def receive_messages(msg):
     log.info(f"{msg.subject}:{msg.data}")
@@ -38,6 +39,7 @@ if __name__ == "__main__":
     if 'PROMETHEUS_PUSHGATEWAY_URL' in panini_config.infrastructure:
         app.add_middleware(
             PrometheusMonitoringMiddleware,
-            pushgateway_url=panini_config.infrastructure.get('PROMETHEUS_PUSHGATEWAY_URL'),
+            pushgateway_url=panini_config.infrastructure.get(
+                'PROMETHEUS_PUSHGATEWAY_URL'),
         )
     app.start()
